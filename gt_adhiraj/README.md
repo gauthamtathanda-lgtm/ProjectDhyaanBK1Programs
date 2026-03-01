@@ -66,6 +66,3 @@ For one-dimensional signals, fractal dimension relates to H as:
 D = 2 − H
 
 Alpha and theta oscillations have been reported to change in opposite directions during meditation. Rather than examining only band power, we use the Hurst exponent to study whether these bands themselves differ in their long-range temporal correlation structure. Specifically, we aim to test whether theta activity becomes more persistent (higher H) while alpha becomes less persistent, indicating a shift in large-scale temporal organization within bands of different frequencies during meditation.
-
-ject initialized.  
-Preprocessing pipeline and implementation of HFD and DFA are in progress.
