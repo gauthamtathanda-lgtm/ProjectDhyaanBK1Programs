@@ -11,24 +11,25 @@
 % Supratim Ray,
 % March 2015
 
-function getEEGDataBrainProductsLong(subjectName,expDate,protocolName,folderSourceString,gridType,goodStimTimes,timeStartFromBaseLine,deltaT)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The "Long" version allows to get longer segments from selected channels
+
+function getEEGDataBrainProductsLong(subjectName,expDate,protocolName,folderSourceString,gridType,goodStimTimes,timeStartFromBaseLine,deltaT,channelNumbers)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fileName = [subjectName expDate protocolName '.vhdr'];
-folderName = fullfile(folderSourceString,'data',subjectName,gridType,expDate,protocolName);
+folderName = fullfile(folderSourceString,'data','segmentedDataLong',subjectName,gridType,expDate,protocolName);
 makeDirectory(folderName);
 folderIn = fullfile(folderSourceString,'data','rawData',[subjectName expDate]);
-folderExtract = fullfile(folderName,'extractedData');
-makeDirectory(folderExtract);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % use EEGLAB plugin "bva-io" to read the file
 eegInfo = pop_loadbv(folderIn,fileName,[],[]);
 
-cAnalog = eegInfo.nbchan;
+cAnalog = length(channelNumbers);
 Fs = eegInfo.srate;
-analogInputNums = 1:cAnalog;
-disp(['Total number of Analog channels recorded: ' num2str(cAnalog)]);
+analogInputNums = channelNumbers;
+disp(['Total number of Analog channels to be segmented: ' num2str(cAnalog)]);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% EEG Decomposition %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,8 +41,8 @@ times = eegInfo.times/1000; % This is in ms
 if (cAnalog>0)
     
     % Set appropriate time Range
-    numSamples = deltaT*Fs;
-    timeVals = timeStartFromBaseLine+ (1/Fs:1/Fs:deltaT);
+    numSamples = floor(deltaT*Fs);
+    timeVals = timeStartFromBaseLine + (1/Fs:1/Fs:deltaT);
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Prepare folders
