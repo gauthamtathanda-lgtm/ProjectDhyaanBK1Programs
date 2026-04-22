@@ -24,8 +24,18 @@ for i=1:length(protocolNameList)
     
     % Load goodStimTimes folderExtract
     load(fullfile(folderExtract,'goodStimCodeNums.mat'),'goodStimTimes');
+    
     % Save long segmented data
     goodStimTime = goodStimTimes(1);
     deltaT = goodStimTimes(end) - goodStimTime + 2*abs(timeStartFromBaseLine);
     getEEGDataBrainProductsLong(subjectName,expDate,protocolName,folderSourceString,gridType,goodStimTime,timeStartFromBaseLine,deltaT,channelNumbers);
+
+    % Save goodStimTimes in extractedData
+    folderNameLong = fullfile(folderSourceString,'data','segmentedDataLong',subjectName,gridType,expDate,protocolName);
+    folderExtractLong = fullfile(folderNameLong,'extractedData');
+    makeDirectory(folderExtractLong);
+
+    goodStimTimes = goodStimTimes - goodStimTime; % All times relative to the first one
+    save(fullfile(folderExtractLong, 'goodStimTimes.mat'), 'goodStimTimes');
+    
 end

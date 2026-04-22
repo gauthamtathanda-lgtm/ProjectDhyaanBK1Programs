@@ -11,7 +11,8 @@ folderSourceString = 'D:\OneDrive - Indian Institute of Science\Supratim\Project
 % get all good subjects
 goodSubjectList = getGoodSubjectsBK1;
 
-problamaticSubjects  = [{'095KM'} {'053DR'} {'010PB'}]; % To be extracted separately
+% problamaticSubjects  = [{'095KM'} {'053DR'} {'010PB'}]; % To be extracted separately
+problamaticSubjects  = {'053DR'};
 goodSubjectList = setdiff(goodSubjectList,problamaticSubjects,'stable');
 
 % Channels
@@ -21,7 +22,8 @@ for i=1:length(goodSubjectList)
     disp(['Extracting Subject ' subjectName]);
     %-------------------------------------------------------------------------------------------------------------------------------
     expDate = expDateList{strcmp(subjectName,subjectNameList)};
-    segmentAndSaveDataLong(subjectName,expDate,folderSourceString,channelNumbers); % Segment data
+%    segmentAndSaveDataLong(subjectName,expDate,folderSourceString,channelNumbers); % Segment data
+    segmentAndSaveMeditationDataLong(subjectName,expDate,folderSourceString,channelNumbers); % Segment meditation data further
 end
 
 %-----------------------------------------------------------------------------------------------------
