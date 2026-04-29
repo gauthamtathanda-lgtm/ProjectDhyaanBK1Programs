@@ -1,68 +1,50 @@
-# Fractal Dimension Analysis of EEG During Meditation
+# Divergent Neural Dynamical Regimes in Meditators and Controls
 
-This project investigates the fractal properties of EEG signals in meditators and non-meditators using nonlinear complexity measures.
+## Overview
 
-We compute two primary measures:
+This project analyzes EEG data from a meditator (013AR) and a matched control (064PK) using Higuchi Fractal Dimension (HFD) as a measure of neural complexity.
 
-- Higuchi Fractal Dimension (HFD): quantifies local temporal irregularity (signal roughness)
-- Hurst Exponent (H) using Detrended Fluctuation Analysis (DFA): quantifies long-range temporal correlations
+The aim is to examine how neural dynamics differ under visual stimulation and meditation, beyond standard spectral analysis.
 
-Our objective is to compare neural complexity:
+## Method
 
-- Between meditators and non-meditators
-- Across different stimulus conditions
-- Across time within a meditation session especially within specific frequency bands (alpha and theta)
+EEG signals are analyzed in broadband (1–90 Hz). For each trial:
 
-## Research Questions
+ΔHFD = HFD_stimulus − HFD_baseline
 
-1. Do meditators exhibit different broadband EEG fractal dimension compared to controls?
-2. Does EEG complexity change during a meditation session?
-3. Are alpha and theta bands associated with altered long-range temporal correlations?
-4. Do visual grating stimuli modulate fractal complexity?
+Baseline window: −500 to 0 ms  
+Stimulus window: 250 to 750 ms  
 
+HFD is computed with kmax = 10. Statistical comparisons are performed using the Wilcoxon signed-rank test. Analysis is focused on occipito-parietal electrodes.
 
-## Planned Methodology
+## Experimental Conditions
 
-1. Preprocessing
-   - Apply bandpass filtering to reduce slow drifts and high-frequency noise
-   - Examine data for clearly noisy segments or channels
-   - Re-reference signals to give voltage measurements are consistently defined
-     
-2.Windowing
+EO1 → EC1 → G1 → M1 → G2 → EO2 → EC2 → M2
 
-   - Divide EEG into sliding time windows
+EO/EC: eyes open / closed  
+G1, G2: grating stimuli  
+M1, M2: early and late meditation blocks  
 
-3. Feature Computation (per channel and per band)
-   - Compute Higuchi Fractal Dimension
-   - Compute Hurst exponent using DFA
-   - Repeat analysis for:
-        - Broadband EEG
-        - Alpha Band (8-12 Hz)
-        - Theta Band (4-8 Hz)
+## Results
 
-4. Comparative Analysis
-   - Meditators vs controls
-   - Within-session dynamics
-   - Stimulus-based differences
+Controls show consistent reductions in HFD under stimulus conditions.  
+The meditator shows stability or increases in HFD.
 
-5. Visualization
-   - Channel-wise complexity
-   - Time evolution plots
-   - Band-specific analysis
+For grating stimuli, controls exhibit monotonic suppression with increasing spatial frequency, while the meditator shows scale-dependent modulation.
 
+Differences between meditator and control are minimal in M1 but become pronounced in M2, indicating that effects emerge over time rather than being present initially.
 
-## Theoretical Background (Brief)
+## Interpretation
 
-EEG signals are nonlinear and may exhibit scale-invariant properties.
+The results suggest that meditation is associated with a change in neural dynamical regime, rather than a simple change in activity levels.
 
-Higuchi Fractal Dimension estimates the fractal dimension of a time series directly in the time domain. Higher values indicate greater short-scale complexity.
+## Limitations
 
-The Hurst Exponent measures long-range temporal correlations:
-- H ≈ 0.5 indicates random dynamics
-- H > 0.5 indicates persistent correlations
-- H < 0.5 indicates anti-persistent behavior
+Data is epoched and short, limiting reliable estimation of long-range temporal correlations (Hurst exponent).  
+Surrogate analysis (IAAFT) has not yet been implemented.  
+Analysis is based on a single subject pair.
 
-For one-dimensional signals, fractal dimension relates to H as:
-D = 2 − H
+## Data
 
-Alpha and theta oscillations have been reported to change in opposite directions during meditation. Rather than examining only band power, we use the Hurst exponent to study whether these bands themselves differ in their long-range temporal correlation structure. Specifically, we aim to test whether theta activity becomes more persistent (higher H) while alpha becomes less persistent, indicating a shift in large-scale temporal organization within bands of different frequencies during meditation.
+Data is derived from the ProjectDhyaanBK1 EEG dataset.
+
