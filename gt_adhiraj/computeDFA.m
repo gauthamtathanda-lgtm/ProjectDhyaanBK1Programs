@@ -2,7 +2,7 @@ function H = computeDFA(x)
 
     x    = double(x(:));
     N    = length(x);
-    y    = cumsum(x - mean(x));        % integrate mean-centred signal
+    y    = cumsum(x - mean(x));        
 
     nMin = max(4, floor(N * 0.02));
     nMax = floor(N / 4);
