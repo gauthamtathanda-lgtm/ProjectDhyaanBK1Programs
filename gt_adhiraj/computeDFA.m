@@ -1,8 +1,19 @@
 function H = computeDFA(x)
+% computeDFA  Hurst Exponent via Detrended Fluctuation Analysis
+%
+% Usage:  H = computeDFA(x)
+%   x — 1D signal vector (>= 200 samples recommended)
+%
+% Returns: H in (0,1)
+%   H > 0.5 → persistent long-range correlations (meditative coherence)
+%   H ~ 0.5 → random / uncorrelated
+%   H < 0.5 → anti-persistent
+%
+% Relationship: HFD + H ≈ 2 
 
     x    = double(x(:));
     N    = length(x);
-    y    = cumsum(x - mean(x));        
+    y    = cumsum(x - mean(x));        % integrate mean-centred signal
 
     nMin = max(4, floor(N * 0.02));
     nMax = floor(N / 4);
